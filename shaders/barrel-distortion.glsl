@@ -17,11 +17,28 @@
 */
 
 #if defined(VERTEX)
-uniform mediump mat4 MVPMatrix;
-attribute mediump vec4 VertexCoord;
-attribute mediump vec2 TexCoord;
 
-varying mediump vec2 TEX0;
+#if __VERSION__ >= 130
+#define COMPAT_VARYING out
+#define COMPAT_ATTRIBUTE in
+#define COMPAT_TEXTURE texture
+#else
+#define COMPAT_VARYING varying 
+#define COMPAT_ATTRIBUTE attribute 
+#define COMPAT_TEXTURE texture2D
+#endif
+
+#ifdef GL_ES
+#define COMPAT_PRECISION mediump
+#else
+#define COMPAT_PRECISION
+#endif
+
+uniform COMPAT_PRECISION mat4 MVPMatrix;
+COMPAT_ATTRIBUTE mediump vec4 VertexCoord;
+COMPAT_ATTRIBUTE mediump vec2 TexCoord;
+
+COMPAT_VARYING mediump vec2 TEX0;
 
 void main()
 {
@@ -29,9 +46,31 @@ TEX0 = TexCoord;
 gl_Position = MVPMatrix * VertexCoord;
 }
 #elif defined(FRAGMENT)
+
+#if __VERSION__ >= 130
+#define COMPAT_VARYING in
+#define COMPAT_TEXTURE texture
+out vec4 FragColor;
+#else
+#define COMPAT_VARYING varying
+#define FragColor gl_FragColor
+#define COMPAT_TEXTURE texture2D
+#endif
+
+#ifdef GL_ES
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+#define COMPAT_PRECISION mediump
+#else
+#define COMPAT_PRECISION
+#endif
+
 uniform sampler2D Texture;
-uniform vec2 InputSize;
-uniform vec2 TextureSize;
+uniform COMPAT_PRECISION vec2 InputSize;
+uniform COMPAT_PRECISION vec2 TextureSize;
 varying vec2 TEX0;
 
 const mediump float BARREL_DISTORTION = 0.25;
@@ -47,14 +86,14 @@ texcoord = texcoord + (texcoord * (BARREL_DISTORTION * rsq));
 texcoord *= rescale;
 
 if (abs(texcoord.x) > 0.5 || abs(texcoord.y) > 0.5)
-gl_FragColor = vec4(0.0);
+FragColor = vec4(0.0);
 else
 {
 texcoord += vec2(0.5);
 texcoord /= scale;
-vec3 colour = texture2D(Texture, texcoord).rgb;
+vec3 colour = COMPAT_TEXTURE(Texture, texcoord).rgb;
 
-gl_FragColor = vec4(colour,1.0);
+FragColor = vec4(colour,1.0);
 }
 }
 #endif

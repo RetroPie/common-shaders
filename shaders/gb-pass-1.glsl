@@ -16,12 +16,13 @@
 #else
 #define COMPAT_PRECISION
 #endif
-COMPAT_VARYING     vec2 _upper_bound;
-COMPAT_VARYING     vec2 _lower_bound;
-COMPAT_VARYING     vec2 _tex_coord_4;
-COMPAT_VARYING     vec2 _tex_coord_3;
-COMPAT_VARYING     vec2 _tex_coord_2;
-COMPAT_VARYING     vec2 _tex_coord_1;
+
+COMPAT_VARYING vec2 _upper_bound;
+COMPAT_VARYING vec2 _lower_bound;
+COMPAT_VARYING vec2 _tex_coord_4;
+COMPAT_VARYING vec2 _tex_coord_3;
+COMPAT_VARYING vec2 _tex_coord_2;
+COMPAT_VARYING vec2 _tex_coord_1;
 struct input_dummy {
     vec2 _video_size;
     vec2 _texture_size;
@@ -52,8 +53,8 @@ COMPAT_VARYING vec4 TEX5;
 COMPAT_VARYING vec4 TEX6;
  
 uniform mat4 MVPMatrix;
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
@@ -169,8 +170,8 @@ COMPAT_VARYING vec4 TEX5;
 COMPAT_VARYING vec4 TEX6;
  
 uniform sampler2D Texture;
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;

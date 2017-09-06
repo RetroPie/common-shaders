@@ -16,6 +16,7 @@
 #else
 #define COMPAT_PRECISION
 #endif
+
 COMPAT_VARYING     float _frame_rotation;
 COMPAT_VARYING     vec2 _tex_index;
 COMPAT_VARYING     vec2 _coord_prev_prev;
@@ -52,8 +53,8 @@ COMPAT_VARYING vec4 TEX4;
 
  
 uniform mat4 MVPMatrix;
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
@@ -162,13 +163,13 @@ COMPAT_VARYING vec4 TEX1;
 COMPAT_VARYING vec4 TEX2;
 COMPAT_VARYING vec4 TEX3;
 COMPAT_VARYING vec4 TEX4;
-
- 
-uniform int FrameDirection;
-uniform int FrameCount;
+
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
+
 void main()
 {
 

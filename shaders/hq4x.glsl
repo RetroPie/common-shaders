@@ -16,17 +16,17 @@
 #else
 #define COMPAT_PRECISION
 #endif
-COMPAT_VARYING     vec4 _t6;
-COMPAT_VARYING     vec4 _t5;
-COMPAT_VARYING     vec4 _t4;
-COMPAT_VARYING     vec4 _t3;
-COMPAT_VARYING     vec4 _t2;
-COMPAT_VARYING     vec4 _t1;
-COMPAT_VARYING     vec2 _texCoord;
-COMPAT_VARYING     vec4 _position1;
-COMPAT_VARYING     float _frame_rotation;
-
-
+
+COMPAT_VARYING vec4 _t6;
+COMPAT_VARYING vec4 _t5;
+COMPAT_VARYING vec4 _t4;
+COMPAT_VARYING vec4 _t3;
+COMPAT_VARYING vec4 _t2;
+COMPAT_VARYING vec4 _t1;
+COMPAT_VARYING vec2 _texCoord;
+COMPAT_VARYING vec4 _position1;
+COMPAT_VARYING float _frame_rotation;
+
 struct input_dummy {
     vec2 _video_size;
     vec2 _texture_size;
@@ -63,8 +63,8 @@ COMPAT_VARYING vec4 TEX6;
 
  
 uniform mat4 MVPMatrix;
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
@@ -170,6 +170,7 @@ precision mediump float;
 #else
 #define COMPAT_PRECISION
 #endif
+
 COMPAT_VARYING     vec4 _t6;
 COMPAT_VARYING     vec4 _t5;
 COMPAT_VARYING     vec4 _t4;
@@ -297,8 +298,8 @@ COMPAT_VARYING vec4 TEX5;
 COMPAT_VARYING vec4 TEX6;
 
  
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;

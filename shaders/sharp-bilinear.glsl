@@ -16,11 +16,13 @@
 #else
 #define COMPAT_PRECISION
 #endif
+
 struct input_dummy {
     vec2 _video_size;
     vec2 _texture_size;
     vec2 _output_dummy_size;
 };
+
 vec4 _oPosition1;
 vec4 _r0005;
 COMPAT_ATTRIBUTE vec4 VertexCoord;
@@ -28,11 +30,12 @@ COMPAT_ATTRIBUTE vec4 TexCoord;
 COMPAT_VARYING vec4 TEX0;
  
 uniform mat4 MVPMatrix;
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
+
 void main()
 {
     vec2 _otexCoord;
@@ -67,6 +70,7 @@ precision mediump float;
 #else
 #define COMPAT_PRECISION
 #endif
+
 struct input_dummy {
     vec2 _video_size;
     vec2 _texture_size;
@@ -81,8 +85,8 @@ vec2 _TMP10;
 vec2 _c0017;
 COMPAT_VARYING vec4 TEX0;
  
-uniform int FrameDirection;
-uniform int FrameCount;
+uniform COMPAT_PRECISION int FrameDirection;
+uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
