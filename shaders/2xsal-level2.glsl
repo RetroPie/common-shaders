@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2007 guest(r) - guest.r@gmail.com
+    Copyright (C) 2016 guest(r) - guest.r@gmail.com
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -39,6 +39,7 @@ COMPAT_ATTRIBUTE vec4 COLOR;
 COMPAT_ATTRIBUTE vec4 TexCoord;
 COMPAT_VARYING vec4 COL0;
 COMPAT_VARYING vec4 TEX0;
+// out variables go here as COMPAT_VARYING whatever
 
 uniform mat4 MVPMatrix;
 uniform COMPAT_PRECISION int FrameDirection;
@@ -100,26 +101,49 @@ COMPAT_VARYING vec4 TEX0;
 
 void main()
 {
-    vec2 texsize = SourceSize.xy;
-    float dx     = pow(texsize.x, -1.0) * 0.25;
-    float dy     = pow(texsize.y, -1.0) * 0.25;
-    vec3  dt     = vec3(1.0, 1.0, 1.0);
+    vec2 tex = vTexCoord;   
+    //vec2 texsize = IN.texture_size;
+    float dx = 0.25*SourceSize.z;
+    float dy = 0.25*SourceSize.w;
+    vec3  dt = vec3(1.0, 1.0, 1.0);
 
-     
-    vec2 UL =    vTexCoord + vec2(-dx, -dy);
-    vec2 UR =    vTexCoord + vec2( dx, -dy);
-    vec2 DL =    vTexCoord + vec2(-dx,  dy);
-    vec2 DR =    vTexCoord + vec2( dx,  dy);
-    
+    vec4 yx = vec4(dx, dy, -dx, -dy);
+    vec4 xh = yx*vec4(3.0, 1.0, 3.0, 1.0);
+    vec4 yv = yx*vec4(1.0, 3.0, 1.0, 3.0);
 
-    vec3 c00 = texture(Source, UL).xyz;
-    vec3 c20 = texture(Source, UR).xyz;
-    vec3 c02 = texture(Source, DL).xyz;
-    vec3 c22 = texture(Source, DR).xyz;
+    vec3 c11 = texture(Source, tex        ).xyz;    
+    vec3 s00 = texture(Source, tex + yx.zw).xyz; 
+    vec3 s20 = texture(Source, tex + yx.xw).xyz; 
+    vec3 s22 = texture(Source, tex + yx.xy).xyz; 
+    vec3 s02 = texture(Source, tex + yx.zy).xyz;
+    vec3 h00 = texture(Source, tex + xh.zw).xyz; 
+    vec3 h20 = texture(Source, tex + xh.xw).xyz; 
+    vec3 h22 = texture(Source, tex + xh.xy).xyz; 
+    vec3 h02 = texture(Source, tex + xh.zy).xyz;
+    vec3 v00 = texture(Source, tex + yv.zw).xyz; 
+    vec3 v20 = texture(Source, tex + yv.xw).xyz; 
+    vec3 v22 = texture(Source, tex + yv.xy).xyz; 
+    vec3 v02 = texture(Source, tex + yv.zy).xyz;     
 
-    float m1 = dot(abs(c00 - c22), dt) + 0.001;
-    float m2 = dot(abs(c02 - c20), dt) + 0.001;
+    float m1 = 1.0/(dot(abs(s00 - s22), dt) + 0.00001);
+    float m2 = 1.0/(dot(abs(s02 - s20), dt) + 0.00001);
+    float h1 = 1.0/(dot(abs(s00 - h22), dt) + 0.00001);
+    float h2 = 1.0/(dot(abs(s02 - h20), dt) + 0.00001);
+    float h3 = 1.0/(dot(abs(h00 - s22), dt) + 0.00001);
+    float h4 = 1.0/(dot(abs(h02 - s20), dt) + 0.00001);
+    float v1 = 1.0/(dot(abs(s00 - v22), dt) + 0.00001);
+    float v2 = 1.0/(dot(abs(s02 - v20), dt) + 0.00001);
+    float v3 = 1.0/(dot(abs(v00 - s22), dt) + 0.00001);
+    float v4 = 1.0/(dot(abs(v02 - s20), dt) + 0.00001);
 
-    FragColor = vec4((m1*(c02 + c20) + m2*(c22 + c00))/(2.0*(m1 + m2)), 1.0);
+    vec3 t1 = 0.5*(m1*(s00 + s22) + m2*(s02 + s20))/(m1 + m2);
+    vec3 t2 = 0.5*(h1*(s00 + h22) + h2*(s02 + h20) + h3*(h00 + s22) + h4*(h02 + s20))/(h1 + h2 + h3 + h4);
+    vec3 t3 = 0.5*(v1*(s00 + v22) + v2*(s02 + v20) + v3*(v00 + s22) + v4*(v02 + s20))/(v1 + v2 + v3 + v4);
+
+    float k1 = 1.0/(dot(abs(t1 - c11), dt) + 0.00001);
+    float k2 = 1.0/(dot(abs(t2 - c11), dt) + 0.00001);
+    float k3 = 1.0/(dot(abs(t3 - c11), dt) + 0.00001);
+
+    FragColor = vec4((k1*t1 + k2*t2 + k3*t3)/(k1 + k2 + k3), 1.0);
 } 
 #endif
