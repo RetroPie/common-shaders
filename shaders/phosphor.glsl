@@ -104,10 +104,10 @@ precision mediump float;
 #define COMPAT_PRECISION
 #endif
 
-varying     vec2 VARtex_index;
-varying     vec2 VARcoord_prev_prev;
-varying     vec2 VARcoord_prev;
-varying     vec2 VARcoord;
+COMPAT_VARYING     vec2 VARtex_index;
+COMPAT_VARYING     vec2 VARcoord_prev_prev;
+COMPAT_VARYING     vec2 VARcoord_prev;
+COMPAT_VARYING     vec2 VARcoord;
 
 struct coords {
     vec2 VARcoord;
