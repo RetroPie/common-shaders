@@ -91,7 +91,7 @@ vec4 _TMP0;
 uniform sampler2D Texture;
 input_dummy _IN1;
 vec2 _c0004;
-varying vec4 TEX0;
+COMPAT_VARYING vec4 TEX0;
 
 uniform COMPAT_PRECISION int FrameDirection;
 uniform COMPAT_PRECISION int FrameCount;
