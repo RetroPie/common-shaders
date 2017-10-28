@@ -1,6 +1,6 @@
 shaders = 2
 
-shader0 = shaders/supereagle.glsl
+shader0 = shaders/super-eagle.glsl
 filter_linear0 = false
 scale_type0 = source
 scale_x0 = 2.0
