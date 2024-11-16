@@ -14,7 +14,7 @@ scale_type1 = "absolute"
 scale_x1 = 1684
 scale_y1 = 1329
 
-shader2 = "../stock.glsl"
+shader2 = "stock.glsl"
 filter_linear2 = true
 
 textures = TEX_CRT

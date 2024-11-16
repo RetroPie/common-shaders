@@ -35,10 +35,10 @@
 #endif
 
 uniform COMPAT_PRECISION mat4 MVPMatrix;
-COMPAT_ATTRIBUTE mediump vec4 VertexCoord;
-COMPAT_ATTRIBUTE mediump vec2 TexCoord;
+COMPAT_ATTRIBUTE COMPAT_PRECISION vec4 VertexCoord;
+COMPAT_ATTRIBUTE COMPAT_PRECISION vec2 TexCoord;
 
-COMPAT_VARYING mediump vec2 TEX0;
+COMPAT_VARYING COMPAT_PRECISION vec2 TEX0;
 
 void main()
 {
@@ -71,10 +71,10 @@ precision mediump float;
 uniform sampler2D Texture;
 uniform COMPAT_PRECISION vec2 InputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
-varying vec2 TEX0;
+COMPAT_VARYING vec2 TEX0;
 
-const mediump float BARREL_DISTORTION = 0.25;
-const mediump float rescale = 1.0 - (0.25 * BARREL_DISTORTION);
+const COMPAT_PRECISION float BARREL_DISTORTION = 0.25;
+const COMPAT_PRECISION float rescale = 1.0 - (0.25 * BARREL_DISTORTION);
 
 void main()
 {
